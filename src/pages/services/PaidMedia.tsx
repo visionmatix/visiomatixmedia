@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Link } from "react-router-dom"
-import { 
-  MousePointer, 
-  Target, 
-  BarChart3, 
-  Zap, 
-  DollarSign, 
+import {
+  MousePointer,
+  Target,
+  BarChart3,
+  Zap,
+  DollarSign,
   TrendingUp,
   CheckCircle,
   ArrowRight,
@@ -85,7 +85,7 @@ const PaidMedia = () => {
     },
     {
       icon: <Eye className="h-12 w-12" />,
-      title: "Display Ads", 
+      title: "Display Ads",
       description: "Build brand awareness with visually appealing ads across the web",
       metric: "2M+ Reach"
     },
@@ -127,6 +127,7 @@ const PaidMedia = () => {
                 </Button>
               </div>
             </div>
+
             <div className="relative">
               <div className="aspect-square bg-primary-foreground/10 rounded-2xl p-8 flex items-center justify-center">
                 <div className="grid grid-cols-2 gap-4 w-full">
@@ -145,6 +146,20 @@ const PaidMedia = () => {
                 </div>
               </div>
             </div>
+
+
+
+            {/* <div className="relative">
+              <div className="aspect-square rounded-2xl overflow-hidden">
+                <img
+                  src="/Images/paid-media.jpg"
+                  alt="Paid Media"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div> */}
+
+
           </div>
         </div>
       </section>

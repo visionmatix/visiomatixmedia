@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Link } from "react-router-dom"
-import { 
-  Globe, 
-  Code, 
-  Smartphone, 
-  Zap, 
-  Shield, 
+import {
+  Globe,
+  Code,
+  Smartphone,
+  Zap,
+  Shield,
   Palette,
   CheckCircle,
   ArrowRight,
@@ -152,7 +152,7 @@ const WebsiteDevelopment = () => {
                 Website Development
               </h1>
               <p className="text-xl mb-8 opacity-90">
-                Get a professional website tailored to your business needs. We create modern, responsive, and SEO-optimized websites that drive results.
+                In today’s market, your website isn’t just an online brochure; it’s your most powerful sales tool. Yet, an outdated design, slow loading speed, or clunky user experience can quickly turn potential customers away and into the arms of your competition.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button variant="accent" size="lg" asChild>
@@ -160,12 +160,25 @@ const WebsiteDevelopment = () => {
                     Get Started <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                {/* <Button variant="outline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
                   View Portfolio
+                </Button> */}
+
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-[#1C3458] text-[#1C3458] hover:bg-[#1C3458] hover:text-white"
+                  asChild
+                >
+                  <Link to="/contact">Free Consultation</Link>
                 </Button>
+
+
               </div>
             </div>
-            <div className="relative">
+
+
+            {/* <div className="relative">
               <div className="aspect-square bg-primary-foreground/10 rounded-2xl p-8 flex items-center justify-center">
                 <div className="grid grid-cols-2 gap-4 w-full">
                   <div className="bg-primary-foreground/20 rounded-lg p-4 flex items-center justify-center">
@@ -182,7 +195,21 @@ const WebsiteDevelopment = () => {
                   </div>
                 </div>
               </div>
+             </div> */}
+
+
+
+            <div className="relative h-[75vh] rounded-2xl overflow-hidden">
+              <img
+                src="/Images/website-developement.png"
+                alt="Website Development"
+                className="w-full h-full object-contain"
+              />
             </div>
+
+
+
+
           </div>
         </div>
       </section>
@@ -191,9 +218,11 @@ const WebsiteDevelopment = () => {
       <section className="section-padding">
         <div className="container-width">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Why Choose Our Web Development?</h2>
+            <h2 className="text-4xl font-bold mb-4">Does this sound familiar?</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              We build websites that not only look great but also perform exceptionally well in terms of speed, security, and user experience.
+              A poorly designed website is a liability, not an asset. It's time for a professional, modern website that not only looks good but is engineered to grow your business.
+
+
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -374,9 +403,15 @@ const WebsiteDevelopment = () => {
             <Button variant="accent" size="lg" asChild>
               <Link to="/contact">Start Your Project</Link>
             </Button>
-            <Button variant="outline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              View Our Work
-            </Button>
+           
+            <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-[#1C3458] text-[#1C3458] hover:bg-[#1C3458] hover:text-white"
+                  asChild
+                >
+                  <Link to="/contact">View Our Work</Link>
+                </Button>
           </div>
         </div>
       </section>

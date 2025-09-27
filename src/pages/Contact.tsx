@@ -5,19 +5,109 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react"
+import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2"
 
-const Contact = () => {
+function ContactForm() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    countryCode: "",
+    phoneNo: "",
+    serviceInterested: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false); // ✅ for button disable
+
+
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Prepare FormData
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("countryCode", form.countryCode);
+      formData.append("phoneNo", form.phoneNo);
+      formData.append("serviceInterested", form.serviceInterested);
+      formData.append("message", form.message);
+
+      const response = await axios.post(
+        "http://localhost:8084/api/contact/send",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // important
+          },
+        }
+      );
+
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Sent Application Successfully!",
+      });
+
+      setForm({
+        name: "",
+        email: "",
+        countryCode: "",
+        phoneNo: "",
+        serviceInterested: "",
+        message: "",
+      });
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error saving contact!",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen pt-20">
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-hero text-primary-foreground">
+      {/* <section className="section-padding bg-gradient-hero text-primary-foreground">
         <div className="container-width text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">Contact Us</h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto animate-slide-up">
             Ready to transform your digital presence? Let's start the conversation.
           </p>
         </div>
+      </section> */}
+
+      <section
+        className="section-padding text-primary-foreground bg-cover bg-center relative h-[70vh]"
+        style={{
+          backgroundImage: "linear-gradient(rgba(29,52,88,0.6), rgba(29,52,88,0.6)), url('/Images/conatctusBanner.png')",
+        }}
+      >
+        <div className="container-width text-center relative z-10 flex flex-col justify-center h-full">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
+            Contact Us
+          </h1>
+          <p className="text-xl md:text-2xl max-w-3xl mx-auto animate-slide-up">
+            Ready to transform your digital presence? Let's start the conversation.
+          </p>
+        </div>
       </section>
+
 
       {/* Contact Form & Info */}
       <section className="section-padding">
@@ -38,8 +128,10 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Address</h3>
                     <p className="text-muted-foreground">
-                      123 Main Street<br />
-                      Pune, India
+                      Office No. 03,<br></br>
+                      Om Sai Apartment, Davkhar nagar,<br></br>
+                      Chandawd , Nashik<br></br>
+                      – 423101, Maharashtra, India
                     </p>
                   </div>
                 </div>
@@ -50,7 +142,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Phone</h3>
-                    <p className="text-muted-foreground">+91 98765 43210</p>
+                    <p className="text-muted-foreground">+91 8999 101916</p>
                   </div>
                 </div>
 
@@ -60,7 +152,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Email</h3>
-                    <p className="text-muted-foreground">contact@visiomatix.com</p>
+                    <p className="text-muted-foreground">info@visiomatixmedia.net</p>
                   </div>
                 </div>
 
@@ -108,75 +200,138 @@ const Contact = () => {
             <Card className="card-hover animate-scale-in">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-bold mb-6">Send us a Message</h3>
-                <form className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" placeholder="John" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" placeholder="Doe" />
-                    </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name */}
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Name *</Label>
+                    <Input
+                      id="name"
+                      placeholder="Enter your name"
+                      value={form.name}
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
 
+                  {/* Email */}
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="john.doe@example.com" />
+                    <Label htmlFor="email">Email *</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={form.email}
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
 
+                  {/* Country Code */}
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone No</Label>
-                    <Input id="phone" placeholder="+91 98765 43210" />
+                    <Label htmlFor="countryCode">Country Code *</Label>
+                    <Select
+                      value={form.countryCode}
+                      onValueChange={(value) =>
+                        setForm((prev) => ({ ...prev, countryCode: value }))
+                      }
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="-- Select Country Code --" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="+91">+91 India</SelectItem>
+                        <SelectItem value="+1">+1 USA</SelectItem>
+                        <SelectItem value="+44">+44 UK</SelectItem>
+                        <SelectItem value="+61">+61 Australia</SelectItem>
+                        {/* Add more as needed */}
+                      </SelectContent>
+                    </Select>
                   </div>
 
+                  {/* Phone Number */}
                   <div className="space-y-2">
-                    <Label htmlFor="service">Services Interested</Label>
-                    <Select>
+                    <Label htmlFor="phoneNo">Phone No *</Label>
+                    <Input
+                      id="phoneNo"
+                      placeholder="Enter your phone number"
+                      value={form.phoneNo}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  {/* Services Interested */}
+                  <div className="space-y-2">
+                    <Label htmlFor="serviceInterested">Services Interested *</Label>
+                    <Select
+                      value={form.serviceInterested}
+                      onValueChange={(value) =>
+                        setForm((prev) => ({ ...prev, serviceInterested: value }))
+                      }
+                      required
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="-- Select a Service --" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="digital-marketing">Digital Marketing</SelectItem>
-                        <SelectItem value="smm">Social Media Marketing</SelectItem>
-                        <SelectItem value="content-marketing">Content Marketing</SelectItem>
-                        <SelectItem value="paid-media">Paid Media Advertising</SelectItem>
-                        <SelectItem value="seo">SEO</SelectItem>
-                        <SelectItem value="web-development">Website Development</SelectItem>
-                        <SelectItem value="branding">Branding & Design</SelectItem>
-                        <SelectItem value="consultation">Free Consultation</SelectItem>
+                        <SelectItem value="Digital Marketing">Digital Marketing</SelectItem>
+                        <SelectItem value="SMM">Social Media Marketing</SelectItem>
+                        <SelectItem value="Content Marketing">Content Marketing</SelectItem>
+                        <SelectItem value="PPC">PPC</SelectItem>
+                        <SelectItem value="SEO">SEO</SelectItem>
+                        <SelectItem value="Web Development">Website Development</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
+                  {/* Message */}
                   <div className="space-y-2">
-                    <Label htmlFor="budget">Project Budget</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="-- Select Budget Range --" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="under-50k">Under ₹50,000</SelectItem>
-                        <SelectItem value="50k-1l">₹50,000 - ₹1,00,000</SelectItem>
-                        <SelectItem value="1l-3l">₹1,00,000 - ₹3,00,000</SelectItem>
-                        <SelectItem value="3l-5l">₹3,00,000 - ₹5,00,000</SelectItem>
-                        <SelectItem value="above-5l">Above ₹5,00,000</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Tell us about your project, goals, and how we can help you succeed..."
-                      className="min-h-[120px]"
+                    <Label htmlFor="message">Message *</Label>
+                    <Textarea
+                      id="message"
+                      placeholder="Tell us about your project..."
+                      value={form.message}
+                      onChange={handleChange}
+                      required
                     />
                   </div>
 
-                  <Button variant="primary" size="lg" className="w-full">
-                    <Send className="mr-2 h-5 w-5" />
-                    Send Message
+                  {/* Submit Button */}
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    className="w-full flex justify-center items-center"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg
+                          className="animate-spin h-5 w-5 mr-2 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"
+                          ></path>
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
                   </Button>
                 </form>
               </CardContent>
@@ -192,22 +347,32 @@ const Contact = () => {
             <h2 className="text-4xl font-bold mb-4">Find Us</h2>
             <p className="text-xl text-muted-foreground">Visit our office for a face-to-face consultation</p>
           </div>
-          
+
           <Card className="card-hover overflow-hidden">
             <div className="aspect-video bg-muted flex items-center justify-center">
               <div className="text-center">
                 <MapPin className="h-16 w-16 text-primary mx-auto mb-4" />
                 <h3 className="text-xl font-semibold mb-2">📍 View on Google Maps</h3>
                 <p className="text-muted-foreground">
-                  123 Main Street, Pune, India
+                  Office No. 03,Om Sai Apartment, Davkhar nagar,
+                  Chandawd , Nashik – 423101, Maharashtra, India
                 </p>
-                <Button variant="outline" className="mt-4">
-                  <MapPin className="mr-2 h-4 w-4" />
-                  Get Directions
-                </Button>
+
+                <a
+                  href="https://www.google.com/maps/search/Office+No.+03,Om+Sai+Apartment,+Davkhar+nagar,+Chandawd+,+Nashik+%E2%80%93+423101,+Maharashtra,+India/@20.3291312,74.2336096,15z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDkyMS4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="outline" className="mt-4">
+                    <MapPin className="mr-2 h-4 w-4" />
+                    Get Directions
+                  </Button>
+                </a>
               </div>
             </div>
           </Card>
+
+
         </div>
       </section>
 
@@ -218,18 +383,18 @@ const Contact = () => {
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
             Let's discuss your project and create something amazing together. We're here to help you succeed.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="accent" size="lg">
               Schedule a Call
             </Button>
             <Button variant="outline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
               Download Portfolio
             </Button>
-          </div>
+          </div> */}
         </div>
       </section>
     </div>
   )
 }
 
-export default Contact
+export default ContactForm

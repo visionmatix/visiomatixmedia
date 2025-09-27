@@ -116,7 +116,7 @@ const SMM = () => {
                 </Button>
               </div>
             </div>
-            <div className="relative">
+            {/* <div className="relative">
               <div className="aspect-square bg-primary-foreground/10 rounded-2xl p-8 flex items-center justify-center">
                 <div className="grid grid-cols-2 gap-4 w-full">
                   <div className="bg-primary-foreground/20 rounded-lg p-4 flex items-center justify-center">
@@ -132,8 +132,24 @@ const SMM = () => {
                     <MessageCircle className="h-12 w-12 text-primary-foreground" />
                   </div>
                 </div>
+
               </div>
+            </div> */}
+
+
+                  <div className="relative h-[75vh] rounded-2xl overflow-hidden">
+              <img
+                src="/Images/Socail-media.png"
+                alt="Paid Media"
+                className="w-full h-full object-cover transform scale-105 hover:scale-100"
+              />
+
+              {/* Static overlay */}
+              <div className="absolute inset-0 bg-[#1C3458] opacity-30"></div>
             </div>
+
+
+            
           </div>
         </div>
       </section>

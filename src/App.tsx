@@ -15,6 +15,13 @@ import PaidMedia from "./pages/services/PaidMedia";
 import SEO from "./pages/services/SEO";
 import WebsiteDevelopment from "./pages/services/WebsiteDevelopment";
 import NotFound from "./pages/NotFound";
+import SocailMediaMkt from "./pages/services/SocailMediaMkt";
+import SEOP from "./pages/services/SEOP";
+import Careers from "./pages/Careers";
+import PaidMediaNew from "./pages/services/PaidMediaNew";
+import ScrollToTop from "./components/ScrollToTop";
+import JobApplication from "./pages/JobApplication";
+import WebsiteDevelopmentNew from "./pages/services/WebsiteDevelopmentNew";
 
 const queryClient = new QueryClient();
 
@@ -25,16 +32,22 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Header />
+              <ScrollToTop />  {/* 👈 this fixes the scroll issue */}
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
-          <Route path="/services/smm" element={<SMM />} />
+          {/* <Route path="/services/paid-media" element={<PaidMedia />} /> */}
+          <Route path="/services/paid-media" element={< PaidMediaNew/>} />
+/          <Route path="/services/smm" element={<SocailMediaMkt />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/services/seo" element={<SEOP />} />
           <Route path="/services/content-marketing" element={<ContentMarketing />} />
-          <Route path="/services/paid-media" element={<PaidMedia />} />
-          <Route path="/services/seo" element={<SEO />} />
-          <Route path="/services/website-development" element={<WebsiteDevelopment />} />
+          <Route path="/services/website-development" element={<WebsiteDevelopmentNew />} />
+          <Route path="/apply/:jobId" element={<JobApplication />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

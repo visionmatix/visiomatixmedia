@@ -10,7 +10,7 @@ const About = () => {
     },
     {
       icon: <Target className="h-8 w-8" />,
-      title: "Collaborative Excellence", 
+      title: "Collaborative Excellence",
       description: "The best work happens when we collaborate as one team with shared purpose."
     },
     {
@@ -29,12 +29,13 @@ const About = () => {
     {
       name: "Rohit Shinde",
       role: "Founder & CEO, Creative Head",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
+      image: "/Images/rohit-shinde.jpg"
     },
     {
-      name: "Dharshinie Anbazhagan", 
-      role: "Human Resources",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=400&h=400&fit=crop&crop=face"
+      name: "Pooja Patil",
+      role: "Manager",
+      image: "/Images/pooja-patil_11zon.png"
+
     }
   ]
 
@@ -45,7 +46,7 @@ const About = () => {
       icon: <Award className="h-12 w-12" />
     },
     {
-      name: "Our Marketing Team", 
+      name: "Our Marketing Team",
       role: "Experts in SEO, social media, and ads to grow your brand.",
       icon: <Target className="h-12 w-12" />
     },
@@ -59,39 +60,69 @@ const About = () => {
   return (
     <div className="min-h-screen pt-20">
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-hero text-primary-foreground">
-        <div className="container-width text-center">
+      {/* <section className="section-padding bg-gradient-hero text-primary-foreground"> */}
+      {/* <div className="container-width text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">About VisoMatix</h1>
+          <p className="text-xl md:text-2xl max-w-3xl mx-auto animate-slide-up">
+            Bridging creativity and technology in the digital world
+          </p>
+        </div> */}
+      {/* className="section-padding text-primary-foreground bg-cover bg-center relative h-[70vh]"
+  style={{
+    backgroundImage: "linear-gradient(rgba(29,52,88,0.6), rgba(29,52,88,0.6)), url('/Images/conatctusBanner.png')",
+  }}
+      </section> */}
+
+
+      <section
+        className="section-padding text-primary-foreground bg-cover bg-center relative h-[70vh] flex items-center justify-center"
+        style={{
+          backgroundImage:
+            "linear-gradient(#2b5173ed, #2b5173c7), url('/Images/aboutus.png')",
+        } as React.CSSProperties}
+      >
+        <div className="text-center text-white">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
+            About Visiomatix
+          </h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto animate-slide-up">
             Bridging creativity and technology in the digital world
           </p>
         </div>
       </section>
 
+
+
+
+
+
       {/* Our Story */}
       <section className="section-padding">
         <div className="container-width">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-slide-up">
-              <h2 className="text-4xl font-bold mb-6">Our Story</h2>
+              <h2 className="text-4xl font-bold mb-6" style={{ color: '#1C3458' }}>
+                Our Story
+              </h2>
               <p className="text-lg text-muted-foreground mb-6">
                 Visiomatix Media was founded with a simple yet powerful idea: to bridge creativity and technology in the digital world. What started as a small creative initiative has grown into a full-scale media and design agency, empowering brands and businesses with innovative solutions.
               </p>
-              <p className="text-muted-foreground mb-6">
+              <p className="text-lg text-muted-foreground mb-6">
                 From graphic design to digital marketing, branding to web development, we craft experiences that leave a lasting impact. Our journey is driven by passion, innovation, and a commitment to excellence.
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center p-6 bg-secondary rounded-lg">
-                  <div className="text-3xl font-bold text-primary mb-2">2020</div>
+                  <div className="text-3xl font-bold text-primary mb-2">2022</div>
                   <div className="text-sm text-muted-foreground">Founded</div>
                 </div>
                 <div className="text-center p-6 bg-secondary rounded-lg">
-                  <div className="text-3xl font-bold text-primary mb-2">100+</div>
+                  <div className="text-3xl font-bold text-primary mb-2">250+</div>
                   <div className="text-sm text-muted-foreground">Projects</div>
                 </div>
               </div>
             </div>
-            <div className="relative">
+
+            {/* <div className="relative">
               <div className="aspect-square bg-gradient-primary rounded-2xl p-8 flex items-center justify-center">
                 <div className="text-center text-primary-foreground">
                   <Award className="h-20 w-20 mx-auto mb-4" />
@@ -99,7 +130,23 @@ const About = () => {
                   <p className="opacity-80">Driving Innovation</p>
                 </div>
               </div>
-            </div>
+            </div> */}
+
+
+
+           <div className="text-center px-4">
+  <div className="w-full max-w-[40rem] h-[25rem] sm:h-[30rem] md:h-[40rem] rounded-2xl overflow-hidden mx-auto flex items-center justify-center">
+    <img
+      src="/Images/Ourstorynew.jpg"
+      alt="Our Story"
+      className="w-full h-full object-contain"
+    />
+  </div>
+</div>
+
+
+
+
           </div>
         </div>
       </section>
@@ -189,8 +236,8 @@ const About = () => {
             </div>
             <div className="text-center">
               <div className="w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden shadow-strong">
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
+                <img
+                  src="/Images/rohit-shinde.jpg"
                   alt="Rohit Shinde"
                   className="w-full h-full object-cover"
                 />
@@ -209,15 +256,15 @@ const About = () => {
             <h2 className="text-4xl font-bold mb-4">Meet the Visionaries Behind VisoMatix Media</h2>
             <p className="text-xl text-muted-foreground">Our talented team of professionals</p>
           </div>
-          
+
           {/* Leadership Team */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             {teams.map((member, index) => (
               <Card key={index} className="card-hover">
                 <CardContent className="p-8 text-center">
                   <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden shadow-medium">
-                    <img 
-                      src={member.image} 
+                    <img
+                      src={member.image}
                       alt={member.name}
                       className="w-full h-full object-cover"
                     />

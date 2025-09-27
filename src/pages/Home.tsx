@@ -6,6 +6,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import Carousel from "@/components/Carousel"
 import { Link } from "react-router-dom"
+import { useState } from "react";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+import axios from "axios";
 import {
   TrendingUp,
   Users,
@@ -22,8 +26,16 @@ import {
   Award
 } from "lucide-react"
 import heroImage from "@/assets/hero-bg.jpg"
+// import heroImage from "/Images/homepage.png"
+{/* <div
+  className="w-full h-[30rem] md:h-[40rem] rounded-2xl bg-cover bg-center mx-auto"
+  style={{ backgroundImage: "url('/Images/homepage.png')" }}
+></div> */}
+
 
 const Home = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false); // ✅ for button disable
+
   const services = [
     {
       icon: <TrendingUp className="h-8 w-8" />,
@@ -67,17 +79,17 @@ const Home = () => {
     {
       name: "Rohit Shinde",
       role: "CEO & Founder",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
+      image: "/Images/rohit-shinde.jpg"
     },
     {
-      name: "Dharshinie Anbazhagan",
-      role: "Human Resources",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=400&h=400&fit=crop&crop=face"
+      name: "Pooja Patil",
+      role: "Manager",
+      image: "/Images/pooja-patil-new.jpg"
     },
     {
       name: "Creative Team",
       role: "Lead Developer",
-      image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=400&h=400&fit=crop&crop=face"
+      image: "/Images/team3.jpg"
     }
   ]
 
@@ -119,12 +131,90 @@ const Home = () => {
       image: "https://images.unsplash.com/photo-1553830591-42e4fd7035d5?w=400&h=250&fit=crop"
     }
   ]
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phoneNo: "",
+    serviceInterested: "",
+    countryCode:"",
+    message: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({
+      ...form,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSelectChange = (value: string) => {
+    setForm({
+      ...form,
+      serviceInterested: value
+    });
+  };
+
+
+ 
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    // Prepare FormData
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("countryCode", form.countryCode);
+    formData.append("phoneNo", form.phoneNo);
+    formData.append("serviceInterested", form.serviceInterested);
+    formData.append("message", form.message);
+
+    const response = await axios.post(
+      "http://localhost:8084/api/contact/send",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data", // important
+        },
+      }
+    );
+
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Sent Application Successfully!",
+    });
+
+    setForm({
+      name: "",
+      email: "",
+      phoneNo: "",
+      serviceInterested: "",
+      countryCode: "",
+      message: "",
+    });
+  } catch (err) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Error saving contact!",
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+
+
+   
+   
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
@@ -132,20 +222,33 @@ const Home = () => {
         </div>
         <div className="relative z-10 text-center text-primary-foreground animate-fade-in">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            Welcome to <span className="gradient-text">VisoMatix</span>
+            Welcome to Visiomatix Media
+            {/* Welcome to <span className="gradient-text">VisoMatix</span> */}
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
             Innovating with Technology for a Smarter Future
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="accent" size="xl" asChild>
-              <Link to="/services">
+              <Link to="/services/digital-marketing">
                 Our Services <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="xl" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary" asChild>
+
+            {/* <Button variant="outline" size="xl" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary" asChild>
+              <Link to="/contact">Get Started</Link>
+            </Button> */}
+
+            <Button
+              variant="outline"
+              size="xl"
+              className="text-[#141512] border-primary-foreground hover:bg-primary-foreground hover:text-primary"
+              asChild
+            >
               <Link to="/contact">Get Started</Link>
             </Button>
+
+
           </div>
         </div>
       </section>
@@ -159,7 +262,8 @@ const Home = () => {
               <p className="text-lg text-muted-foreground mb-6">
                 Visiomatix Media, a leading digital agency based in Nashik, Maharashtra, is your key to a stronger brand presence. We blend human-centric thinking with technology to create media strategies that connect with your audience and drive results.
               </p>
-              <p className="text-muted-foreground mb-8">
+              {/* <p className="text-muted-foreground mb-8"> */}
+              <p className="text-lg text-muted-foreground mb-6">
                 Our team of experts works tirelessly to deliver data-informed solutions that cut through the digital clutter and turn attention into real engagement. We specialize in empowering small and medium-sized businesses across diverse industries.
               </p>
               <div className="grid grid-cols-2 gap-6">
@@ -173,6 +277,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
+{/*             
             <div className="relative">
               <div className="aspect-square bg-gradient-primary rounded-2xl p-8 flex items-center justify-center">
                 <div className="grid grid-cols-2 gap-4 w-full">
@@ -190,7 +295,29 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
+
+
+
+  <div
+  className="w-full" 
+  style={{
+    height: "70vh", // half the viewport height
+    borderRadius: "1rem", // rounded corners
+    // backgroundImage: "url('/Images/aboutsectionpage.png')",
+    backgroundImage: "url('/Images/about-office.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+></div>
+
+
+
+
+
+         
+
+
           </div>
         </div>
       </section>
@@ -238,8 +365,8 @@ const Home = () => {
                 <Card className="card-hover max-w-sm mx-auto">
                   <CardContent className="p-8 text-center">
                     <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden">
-                      <img 
-                        src={member.image} 
+                      <img
+                        src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover"
                       />
@@ -297,8 +424,8 @@ const Home = () => {
               <div key={index} className="px-4">
                 <Card className="card-hover max-w-lg mx-auto">
                   <div className="aspect-video overflow-hidden rounded-t-lg">
-                    <img 
-                      src={post.image} 
+                    <img
+                      src={post.image}
                       alt={post.title}
                       className="w-full h-full object-cover"
                     />
@@ -328,61 +455,164 @@ const Home = () => {
                   <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                     <Globe className="h-5 w-5 text-primary-foreground" />
                   </div>
-                  <span>123 Main Street, Pune, India</span>
+                  <span>Office No. 03,Om Sai Apartment, Davkhar nagar,Chandawd , Nashik
+                    <br /> Chandawd , Nashik
+                    – 423101, Maharashtra, India
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                     <Users className="h-5 w-5 text-primary-foreground" />
                   </div>
-                  <span>+91 98765 43210</span>
+                  <span> +91 8999 101916</span>
+
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                     <PenTool className="h-5 w-5 text-primary-foreground" />
                   </div>
-                  <span>contact@visiomatix.com</span>
+                  <span>info@visiomatixmedia.net</span>
                 </div>
               </div>
             </div>
             <Card className="card-hover">
               <CardContent className="p-8">
-                <form className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Enter your name" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="Enter your email" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone No</Label>
-                    <Input id="phone" placeholder="Enter your phone number" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="service">Services Interested</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="-- Select a Service --" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="digital-marketing">Digital Marketing</SelectItem>
-                        <SelectItem value="smm">Social Media Marketing</SelectItem>
-                        <SelectItem value="content-marketing">Content Marketing</SelectItem>
-                        <SelectItem value="ppc">PPC</SelectItem>
-                        <SelectItem value="seo">SEO</SelectItem>
-                        <SelectItem value="web-development">Website Development</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea id="message" placeholder="Tell us about your project..." />
-                  </div>
-                  <Button variant="primary" size="lg" className="w-full">
-                    Send Message
-                  </Button>
-                </form>
+              <form onSubmit={handleSubmit} className="space-y-6">
+  {/* Name */}
+  <div className="space-y-2">
+    <Label htmlFor="name">Name *</Label>
+    <Input
+      id="name"
+      placeholder="Enter your name"
+      value={form.name}
+      onChange={handleChange}
+      required
+    />
+  </div>
+
+  {/* Email */}
+  <div className="space-y-2">
+    <Label htmlFor="email">Email *</Label>
+    <Input
+      id="email"
+      type="email"
+      placeholder="Enter your email"
+      value={form.email}
+      onChange={handleChange}
+      required
+    />
+  </div>
+
+  {/* Country Code */}
+  <div className="space-y-2">
+    <Label htmlFor="countryCode">Country Code *</Label>
+    <Select
+      value={form.countryCode}
+      onValueChange={(value) =>
+        setForm((prev) => ({ ...prev, countryCode: value }))
+      }
+      required
+    >
+      <SelectTrigger>
+        <SelectValue placeholder="-- Select Country Code --" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="+91">+91 India</SelectItem>
+        <SelectItem value="+1">+1 USA</SelectItem>
+        <SelectItem value="+44">+44 UK</SelectItem>
+        <SelectItem value="+61">+61 Australia</SelectItem>
+        {/* Add more as needed */}
+      </SelectContent>
+    </Select>
+  </div>
+
+  {/* Phone Number */}
+  <div className="space-y-2">
+    <Label htmlFor="phoneNo">Phone No *</Label>
+    <Input
+      id="phoneNo"
+      placeholder="Enter your phone number"
+      value={form.phoneNo}
+      onChange={handleChange}
+      required
+    />
+  </div>
+
+  {/* Services Interested */}
+  <div className="space-y-2">
+    <Label htmlFor="serviceInterested">Services Interested *</Label>
+    <Select
+      value={form.serviceInterested}
+      onValueChange={(value) =>
+        setForm((prev) => ({ ...prev, serviceInterested: value }))
+      }
+      required
+    >
+      <SelectTrigger>
+        <SelectValue placeholder="-- Select a Service --" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="Digital Marketing">Digital Marketing</SelectItem>
+        <SelectItem value="SMM">Social Media Marketing</SelectItem>
+        <SelectItem value="Content Marketing">Content Marketing</SelectItem>
+        <SelectItem value="PPC">PPC</SelectItem>
+        <SelectItem value="SEO">SEO</SelectItem>
+        <SelectItem value="Web Development">Website Development</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+
+  {/* Message */}
+  <div className="space-y-2">
+    <Label htmlFor="message">Message *</Label>
+    <Textarea
+      id="message"
+      placeholder="Tell us about your project..."
+      value={form.message}
+      onChange={handleChange}
+      required
+    />
+  </div>
+
+  {/* Submit Button */}
+  <Button
+    variant="primary"
+    size="lg"
+    className="w-full flex justify-center items-center"
+    type="submit"
+    disabled={isSubmitting}
+  >
+    {isSubmitting ? (
+      <>
+        <svg
+          className="animate-spin h-5 w-5 mr-2 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"
+          ></path>
+        </svg>
+        Sending...
+      </>
+    ) : (
+      "Send Message"
+    )}
+  </Button>
+</form>
+
+
               </CardContent>
             </Card>
           </div>

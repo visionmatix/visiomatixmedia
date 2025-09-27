@@ -3,18 +3,26 @@ import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin } from "luc
 
 const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground">
+    // <footer className="bg-primary text-primary-foreground">
+    <footer className="bg-[#1C3458] text-primary-foreground">
+
       <div className="container-width section-padding">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-2 mb-6">
+            <div className="flex items-center space-x-2 mb-6" id='footer-logo'>
               <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
-                <span className="text-accent-foreground font-bold text-xl">V</span>
+                {/* <span className="text-accent-foreground font-bold text-xl">V</span> */}
+                 <img
+                src="/Images/IMG_4396.jpg"
+                alt="VisoMatix Logo"
+                // className="w-10 h-10 object-contain"
+                className="w-10 h-10"
+              />
               </div>
-              <span className="text-2xl font-bold">VisoMatix</span>
+              <span className="text-2xl font-bold">Visiomatix Media</span>
             </div>
-            <p className="text-primary-foreground/80 mb-6">
+            <p className="text-primary-foreground/80 mb-6 mt-2">
               Innovating with Technology for a Smarter Future. We blend human-centric thinking with technology to create media strategies that connect with your audience.
             </p>
             <div className="flex space-x-4">
@@ -27,7 +35,7 @@ const Footer = () => {
               <a href="#" className="hover:text-accent transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-accent transition-colors">
+              <a href="https://www.linkedin.com/company/visiomatix-media/about/-For" className="hover:text-accent transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
@@ -43,7 +51,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-primary-foreground/80 hover:text-accent transition-colors">
+                <Link to="/services/digital-marketing" className="text-primary-foreground/80 hover:text-accent transition-colors">
                   Services
                 </Link>
               </li>
@@ -87,19 +95,19 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-6">Contact Info</h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 mt-0.5 text-accent" />
+                <MapPin className="h-8 w-8 mt-0.5 text-primary-foreground" />
                 <span className="text-primary-foreground/80">
-                  123 Main Street<br />
-                  Pune, India
+                  Office No. 03,Om Sai Apartment, Davkhar nagar,<br/>
+                  Chandawd , Nashik – 423101, Maharashtra, India
                 </span>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-accent" />
-                <span className="text-primary-foreground/80">+91 98765 43210</span>
+                <Phone className="h-5 w-5 text-primary-foreground" />
+                <span className="text-primary-foreground/80">+91 8999 101916</span>
               </div>
               <div className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-accent" />
-                <span className="text-primary-foreground/80">contact@visiomatix.com</span>
+                <Mail className="h-5 w-5 text-primary-foreground" />
+                <span className="text-primary-foreground/80">info@visiomatixmedia.net</span>
               </div>
             </div>
           </div>
@@ -107,7 +115,7 @@ const Footer = () => {
 
         <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center">
           <p className="text-primary-foreground/60">
-            © 2024 VisoMatix Media. All rights reserved.
+            © 2025 Visiomatix Media. All rights reserved.
           </p>
         </div>
       </div>

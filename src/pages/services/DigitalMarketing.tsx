@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Link } from "react-router-dom"
-import { 
-  TrendingUp, 
-  Target, 
-  BarChart3, 
-  Users, 
-  Search, 
-  MousePointer, 
-  PenTool, 
+import {
+  TrendingUp,
+  Target,
+  BarChart3,
+  Users,
+  Search,
+  MousePointer,
+  PenTool,
   Globe,
   CheckCircle,
   ArrowRight,
@@ -35,7 +35,7 @@ const DigitalMarketing = () => {
     },
     {
       icon: <Zap className="h-6 w-6" />,
-      title: "Multi-Channel Approach", 
+      title: "Multi-Channel Approach",
       description: "Integrated campaigns across all digital touchpoints"
     }
   ]
@@ -75,7 +75,7 @@ const DigitalMarketing = () => {
 
   const benefits = [
     "Increased brand visibility and awareness",
-    "Higher quality leads and conversions", 
+    "Higher quality leads and conversions",
     "Better customer engagement and retention",
     "Measurable ROI and performance tracking",
     "Competitive advantage in digital space",
@@ -89,7 +89,7 @@ const DigitalMarketing = () => {
       description: "We analyze your business, competition, and target audience to create a foundation for success."
     },
     {
-      step: "02", 
+      step: "02",
       title: "Strategy Development",
       description: "Develop a comprehensive digital marketing strategy tailored to your specific goals and budget."
     },
@@ -124,12 +124,32 @@ const DigitalMarketing = () => {
                     Get Started <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-                  View Portfolio
+                {/* <Button variant="outline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"> */}
+                 <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-[#1C3458] text-[#1C3458] hover:bg-[#1C3458] hover:text-white"
+                  asChild
+                >
+                  <Link to="/contact">Free Consultation</Link>
                 </Button>
               </div>
             </div>
-            <div className="relative">
+
+
+            {/* <div className="relative h-[75vh] rounded-2xl overflow-hidden">
+              <img
+                src="/Images/digital-marketing.png"
+                alt="Paid Media"
+                className="w-full h-full object-cover transform scale-105 hover:scale-100"
+              />
+
+              <div className="absolute inset-0 bg-[#1C3458] opacity-30"></div>
+            </div> */}
+
+
+{/* 
+             <div className="relative">
               <div className="aspect-square bg-primary-foreground/10 rounded-2xl p-8 flex items-center justify-center">
                 <div className="grid grid-cols-2 gap-4 w-full">
                   <div className="bg-primary-foreground/20 rounded-lg p-4 flex items-center justify-center">
@@ -146,7 +166,17 @@ const DigitalMarketing = () => {
                   </div>
                 </div>
               </div>
+            </div>  */}
+
+  <div className="relative h-[80vh] rounded-2xl overflow-hidden flex justify-center">
+              <img
+                src="/Images/digitalmarketingservice (1)_11zon.png"
+                alt="Paid Media"
+                className="w-[100%] object-cover object-center"
+              />
             </div>
+
+
           </div>
         </div>
       </section>
@@ -280,9 +310,16 @@ const DigitalMarketing = () => {
             <Button variant="accent" size="lg" asChild>
               <Link to="/contact">Start Your Project</Link>
             </Button>
-            <Button variant="outline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              Schedule Consultation
-            </Button>
+          
+             
+            <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-[#1C3458] text-[#1C3458] hover:bg-[#1C3458] hover:text-white"
+                  asChild
+                >
+                  <Link to="/contact">Schedule Consultation </Link>
+                </Button>
           </div>
         </div>
       </section>
